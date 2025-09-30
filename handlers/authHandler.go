@@ -8,6 +8,18 @@ import (
 	"net/http"
 )
 
+// LoginHandler godoc
+// @Summary Login user
+// @Description Authenticate user and return access and refresh tokens
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param login body models.LoginRequest true "Login payload"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /login [post]
 func (h *TodoHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var req models.LoginRequest
 	if err := decode.DecodeJSONBody(w, r, &req); err != nil {
@@ -44,6 +56,17 @@ func (h *TodoHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// RegisterHandler godoc
+// @Summary Register user
+// @Description Create new user and return access and refresh tokens
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param register body models.RegisterRequest true "Register payload"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /register [post]
 func (h *TodoHandler) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	var req models.RegisterRequest
 	if err := decode.DecodeJSONBody(w, r, &req); err != nil {

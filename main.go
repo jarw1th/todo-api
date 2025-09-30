@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "ToDoProject/docs"
 	"ToDoProject/handlers"
 	token "ToDoProject/jwttoken"
 	recovery "ToDoProject/safety"
@@ -9,6 +10,7 @@ import (
 	"net/http"
 
 	mux "github.com/gorilla/mux"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func main() {
@@ -21,6 +23,8 @@ func main() {
 
 	r := mux.NewRouter()
 	r.Use(recovery.RecoverMiddleware)
+
+	r.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
 
 	r.HandleFunc("/login", todoHandler.LoginHandler).Methods("POST")
 	r.HandleFunc("/register", todoHandler.RegisterHandler).Methods("POST")

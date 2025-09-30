@@ -46,3 +46,11 @@ func GetDBConnStr() string {
 		host, port, user, password, dbname, sslmode,
 	)
 }
+
+func GetPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	return port
+}

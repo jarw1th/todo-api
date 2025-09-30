@@ -6,7 +6,6 @@ import (
 	token "ToDoProject/jwttoken"
 	recovery "ToDoProject/safety"
 	"ToDoProject/store"
-	"fmt"
 	"net/http"
 
 	mux "github.com/gorilla/mux"
@@ -37,6 +36,6 @@ func main() {
 	api.HandleFunc("/{id}", todoHandler.PatchTodo).Methods("PATCH")
 	api.HandleFunc("/{id}", todoHandler.DeleteTodo).Methods("DELETE")
 
-	fmt.Println("Server started at http://localhost:8080")
-	http.ListenAndServe(":8080", r)
+	port := recovery.GetPort()
+	http.ListenAndServe(":"+port, r)
 }

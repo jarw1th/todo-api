@@ -1,11 +1,11 @@
 package jwttoken
 
 import (
+	recovery "ToDoProject/safety"
 	"context"
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 	"time"
 
@@ -21,7 +21,7 @@ func GenerateTokens(userID int) (accessToken string, refreshToken string, err er
 		"exp":     time.Now().Add(accessTokenDuration).Unix(),
 	}
 	access := jwt.NewWithClaims(jwt.SigningMethodHS256, accessClaims)
-	accessToken, err = access.SignedString(getJwt())
+	accessToken, err = access.SignedString(recovery.GetJwt())
 	if err != nil {
 		return "", "", err
 	}
@@ -32,7 +32,7 @@ func GenerateTokens(userID int) (accessToken string, refreshToken string, err er
 		"type":    "refresh",
 	}
 	refresh := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaims)
-	refreshToken, err = refresh.SignedString(getJwt())
+	refreshToken, err = refresh.SignedString(recovery.GetJwt())
 	if err != nil {
 		return "", "", err
 	}
@@ -54,7 +54,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method")
 			}
-			return getJwt(), nil
+			return recovery.GetJwt(), nil
 		})
 
 		if err != nil {
@@ -89,18 +89,9 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-func getJwt() []byte {
-	secret := os.Getenv("jwt_secret_key")
-	if secret == "" {
-		fmt.Println("WARNING: jwt_secret_key is not set")
-		secret = "none"
-	}
-	return []byte(secret)
-}
-
 func RefreshToken(refreshToken string) (newAccessToken string, err error) {
 	parsed, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
-		return getJwt(), nil
+		return recovery.GetJwt(), nil
 	})
 	if err != nil || !parsed.Valid {
 		return "", fmt.Errorf("invalid refresh token")

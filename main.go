@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	connStr := "host=127.0.0.1 port=5432 user=postgres password=Scooby2011 dbname=todo sslmode=disable"
+	connStr := recovery.GetDBConnStr()
 	todoStore, err := store.NewTodoStore(connStr)
 	if err != nil {
 		panic(err)

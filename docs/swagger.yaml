@@ -1,4 +1,18 @@
 definitions:
+  models.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.RegisterRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
   models.Todo:
     properties:
       created_at:
@@ -33,6 +47,82 @@ definitions:
 info:
   contact: {}
 paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and return access and refresh tokens
+      parameters:
+      - description: Login payload
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login user
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create new user and return access and refresh tokens
+      parameters:
+      - description: Register payload
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register user
+      tags:
+      - auth
   /todos:
     get:
       description: Get all todos of the authenticated user

@@ -135,9 +135,21 @@ paths:
         in: query
         name: title
         type: string
+      - description: Filter by description
+        in: query
+        name: description
+        type: string
       - description: Filter by creation date
         in: query
         name: createdAt
+        type: string
+      - description: Order by
+        in: query
+        name: order
+        type: string
+      - description: Sort value
+        in: query
+        name: sort
         type: string
       - description: Limit results
         in: query

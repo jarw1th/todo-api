@@ -23,13 +23,14 @@ type TodoUpdateHandlerRequest struct {
 }
 
 type TodoQueries struct {
-	Done      *bool
-	Timestamp *string
-	Title     *string
-	Order     *string
-	Sort      *string
-	Limit     *string
-	Offset    *string
+	Done        *bool
+	Timestamp   *string
+	Title       *string
+	Description *string
+	Order       *string
+	Sort        *string
+	Limit       *string
+	Offset      *string
 }
 
 type LoginRequest struct {

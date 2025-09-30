@@ -68,6 +68,11 @@ func (s *TodoStore) FilteredList(userId int, m models.TodoQueries) ([]models.Tod
 		conditions = append(conditions, "title ILIKE $"+strconv.Itoa(len(args)))
 	}
 
+	if m.Description != nil && *m.Description != "" {
+		args = append(args, "%"+*m.Description+"%")
+		conditions = append(conditions, "title ILIKE $"+strconv.Itoa(len(args)))
+	}
+
 	if m.Timestamp != nil && *m.Timestamp != "" {
 		args = append(args, *m.Timestamp)
 		conditions = append(conditions, "created_at = $"+strconv.Itoa(len(args)))

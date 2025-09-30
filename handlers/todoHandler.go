@@ -57,7 +57,10 @@ func (h *TodoHandler) CreateTodo(w http.ResponseWriter, r *http.Request) {
 // @Produce json
 // @Param done query bool false "Filter by done"
 // @Param title query string false "Filter by title"
+// @Param description query string false "Filter by description"
 // @Param createdAt query string false "Filter by creation date"
+// @Param order query string false "Order by"
+// @Param sort query string false "Sort value"
 // @Param limit query int false "Limit results"
 // @Param offset query int false "Offset results"
 // @Success 200 {array} models.Todo

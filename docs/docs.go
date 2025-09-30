@@ -160,8 +160,26 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "Filter by description",
+                        "name": "description",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "Filter by creation date",
                         "name": "createdAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Order by",
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort value",
+                        "name": "sort",
                         "in": "query"
                     },
                     {

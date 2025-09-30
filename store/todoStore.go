@@ -127,9 +127,9 @@ func (s *TodoStore) SoftUpdate(userId int, id int, model models.TodoUpdateHandle
 	}
 
 	err = s.DB.QueryRow(
-		"UPDATE todos SET title=$1, description=$2, done=$3 WHERE id=$4 AND user_id=$5 RETURNING id, title, description, created_at, done",
+		"UPDATE todos SET title=$1, description=$2, done=$3 WHERE id=$4 AND user_id=$5 RETURNING id, user_id, title, description, created_at, done",
 		t.Title, t.Description, t.Done, id, userId,
-	).Scan(&t.ID, &t.Title, &t.Description, &t.CreatedAt, &t.Done)
+	).Scan(&t.ID, &t.UserId, &t.Title, &t.Description, &t.CreatedAt, &t.Done)
 	if err == nil {
 		s.recordHistory(t.ID, userId, oldT, t)
 	}
@@ -140,9 +140,9 @@ func (s *TodoStore) HardUpdate(userId int, id int, model models.TodoUpdateHandle
 	oldT, _ := s.getTodo(id, userId)
 	var t models.Todo
 	err := s.DB.QueryRow(
-		"UPDATE todos SET title=$1, description=$2, done=$3 WHERE id=$4 AND user_id=$5 RETURNING id, title, description, created_at, done",
+		"UPDATE todos SET title=$1, description=$2, done=$3 WHERE id=$4 AND user_id=$5 RETURNING id, user_id, title, description, created_at, done",
 		model.Title, model.Description, model.Done, id, userId,
-	).Scan(&t.ID, &t.Title, &t.Description, &t.CreatedAt, &t.Done)
+	).Scan(&t.ID, &t.UserId, &t.Title, &t.Description, &t.CreatedAt, &t.Done)
 	if err == nil {
 		s.recordHistory(t.ID, userId, oldT, t)
 	}

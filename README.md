@@ -133,6 +133,7 @@ CREATE TABLE todo_history (
     new_value TEXT,
     created_at TIMESTAMP DEFAULT NOW()
 );
+```
 
 ---
 

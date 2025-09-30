@@ -65,7 +65,7 @@ func (s *TodoStore) FilteredList(userId int, m models.TodoQueries) ([]models.Tod
 
 	if m.Title != nil && *m.Title != "" {
 		args = append(args, "%"+*m.Title+"%")
-		conditions = append(conditions, "title ILIKE $"+strconv.Itoa(len(args)))
+		conditions = append(conditions, "description ILIKE $"+strconv.Itoa(len(args)))
 	}
 
 	if m.Description != nil && *m.Description != "" {

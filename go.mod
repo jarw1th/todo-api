@@ -1,6 +1,6 @@
 module ToDoProject
 
-go 1.25.1
+go 1.25
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect

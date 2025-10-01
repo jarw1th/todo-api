@@ -28,9 +28,9 @@ func NewTodoStore(connStr string) (*TodoStore, error) {
 func (s *TodoStore) Create(userId int, title string, description string) (models.Todo, error) {
 	var t models.Todo
 	err := s.DB.QueryRow(
-		"INSERT INTO todos(user_id, title, description, done) VALUES($1, $2, $3, $4) RETURNING id, user_id, title, description, done",
+		"INSERT INTO todos(user_id, title, description, done) VALUES($1, $2, $3, $4) RETURNING id, user_id, title, description, created_at, done",
 		userId, title, description, false,
-	).Scan(&t.ID, &t.UserId, &t.Title, &t.Description, &t.Done)
+	).Scan(&t.ID, &t.UserId, &t.Title, &t.Description, &t.CreatedAt, &t.Done)
 	if err == nil {
 		s.recordHistory(t.ID, userId, models.Todo{}, t)
 	}
